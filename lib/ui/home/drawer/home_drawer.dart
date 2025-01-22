@@ -1,17 +1,32 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news/ui/home/drawer/section_drawer_item.dart';
+import 'package:news/ui/home/drawer/theme_bottom_sheet.dart';
 import 'package:news/utils/app_colors.dart';
 import 'package:news/utils/app_style.dart';
 import 'package:news/utils/assets_manager.dart';
+import 'package:provider/provider.dart';
 
-class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key});
+import '../../../provider/app_language_provider.dart';
+import '../../../provider/app_theme_provider.dart';
+import 'language_bottom_sheet.dart';
 
+class HomeDrawer extends StatefulWidget {
+  Function onDrawerItemClicked;
+
+  HomeDrawer({required this.onDrawerItemClicked});
+
+  @override
+  State<HomeDrawer> createState() => _HomeDrawerState();
+}
+
+class _HomeDrawerState extends State<HomeDrawer> {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var languageProvider = Provider.of<AppLanguageProvider>(context);
+    var themeProvider = Provider.of<AppThemeProvider>(context);
     return Column(
       children: [
         Container(
@@ -29,34 +44,43 @@ class HomeDrawer extends StatelessWidget {
         InkWell(
           onTap: (){
             // todo: go to home
+            widget.onDrawerItemClicked();
           },
           child: SectionDrawerItem(
               imagePath: AssetsManager.homeIcon,
-              text: 'Go To Home'),
+              text: AppLocalizations.of(context)!.go_to_home),
         ),
         Divider(color: AppColors.whiteColor, thickness: 2,indent: width* .04,endIndent: width*.06,),
         SizedBox(height: height*.02,),
         SectionDrawerItem(
             imagePath: AssetsManager.themeIcon,
-            text: 'Theme'),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: width *.04),
-          padding: EdgeInsets.symmetric(
-            horizontal: width *.04,
-            vertical: height *.02
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: AppColors.whiteColor
-            )
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Dark', style: AppStyles.medium20White,),
-              Icon(Icons.arrow_drop_down,color: AppColors.whiteColor,)
-            ],
+            text: AppLocalizations.of(context)!.theme),
+        InkWell(
+          onTap: () {
+            showThemeBottomSheet();
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: width * .04),
+            padding: EdgeInsets.symmetric(
+                horizontal: width * .04, vertical: height * .02),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.whiteColor)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  themeProvider.appTheme == ThemeMode.dark
+                      ? AppLocalizations.of(context)!.dark
+                      : AppLocalizations.of(context)!.light,
+                  style: AppStyles.medium20White,
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  color: AppColors.whiteColor,
+                )
+              ],
+            ),
           ),
         ),
         SizedBox(height: height*.02,),
@@ -64,28 +88,46 @@ class HomeDrawer extends StatelessWidget {
 
         SectionDrawerItem(
             imagePath: AssetsManager.languageIcon,
-            text: 'Language'),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: width *.04),
-          padding: EdgeInsets.symmetric(
-              horizontal: width *.04,
-              vertical: height *.02
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                  color: AppColors.whiteColor
-              )
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('English', style: AppStyles.medium20White,),
-              Icon(Icons.arrow_drop_down,color: AppColors.whiteColor,)
-            ],
+            text: AppLocalizations.of(context)!.language),
+        InkWell(
+          onTap: () {
+            showLanguageBottomSheet();
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: width * .04),
+            padding: EdgeInsets.symmetric(
+                horizontal: width * .04, vertical: height * .02),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.whiteColor)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  languageProvider.appLanguage == 'en'
+                      ? AppLocalizations.of(context)!.english
+                      : AppLocalizations.of(context)!.arabic,
+                  style: AppStyles.medium20White,
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  color: AppColors.whiteColor,
+                )
+              ],
+            ),
           ),
         ),
       ],
     );
+  }
+
+  void showLanguageBottomSheet() {
+    showModalBottomSheet(
+        context: context, builder: (context) => LanguageBottomSheet());
+  }
+
+  showThemeBottomSheet() {
+    showModalBottomSheet(
+        context: context, builder: (context) => ThemeBottomSheet());
   }
 }
