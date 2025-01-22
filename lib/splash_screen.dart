@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/ui/home/home_screen.dart';
 import 'package:news/utils/assets_manager.dart';
@@ -17,7 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 7), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => HomeScreen()));
     });
