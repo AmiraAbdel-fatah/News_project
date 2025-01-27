@@ -22,4 +22,11 @@ class AssetsManager{
   static const String entertainmentDarkImage =
       'assets/images/Entertainment_dark.png';
   static const String technologyDarkImage = 'assets/images/technology_dark.png';
+
+  static const String splashLightImage = 'assets/images/splash_image_light.png';
+  static const String splashDarkImage = 'assets/images/Splash_image.png';
+
+  static const String brandingLightImage = 'assets/images/branding_light.png';
+
+  static const String brandingDarkImage = 'assets/images/branding_image.png';
 }

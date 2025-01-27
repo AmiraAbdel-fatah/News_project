@@ -13,8 +13,7 @@ class NewsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _timestamp = news.publishedAt ?? '';
-    var time = DateTime.now().subtract(Duration(minutes: 20));
+    DateTime time = DateTime.parse(news.publishedAt!);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Container(
@@ -61,22 +60,16 @@ class NewsItem extends StatelessWidget {
                 style: AppStyles.medium12Grey,
               )),
               Expanded(
-                  child: Text(
-                timeago.format(time),
-                textAlign: TextAlign.end,
-                style: AppStyles.medium12Grey,
-              )),
+                child: Text(
+                  timeago.format(time),
+                  textAlign: TextAlign.end,
+                  style: AppStyles.medium12Grey,
+                ),
+              ),
             ],
           )
         ],
       ),
     );
   }
-//   formatedTime(){
-//final fifteenAgo = DateTime.now().subtract(Duration(minutes: 15));
-//
-//   print(timeago.format(fifteenAgo)); // 15 minutes ago
-//   print(timeago.format(fifteenAgo, locale: 'en_short')); // 15m
-//   print(timeago.format(fifteenAgo, locale: 'es')); // hace 15 minutos
-// }
 }
