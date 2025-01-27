@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/model/source_response.dart';
+import 'package:news/ui/home/category/cubit/source_state.dart';
 import 'package:news/ui/home/category/sourse_name_widget.dart';
 import 'package:news/ui/home/news/news_widget.dart';
 import 'package:news/utils/app_colors.dart';
@@ -28,8 +29,8 @@ class _SourceTabWidgetState extends State<SourceTabWidget> {
               indicatorColor: AppColors.blackColor,
               dividerColor: AppColors.transparentColor,
               onTap: (index) {
-                selectedIndex = index;
-                setState(() {});
+                ChangeSourceSelectedState(
+                    selectedIndex: widget.sourceList.length);
               },
               tabs: widget.sourceList.map((source) {
                 return SourseNameWidget(
@@ -45,4 +46,18 @@ class _SourceTabWidgetState extends State<SourceTabWidget> {
 
     );
   }
+
+// @override
+// void didUpdateWidget(covariant SourceTabWidget oldWidget) {
+//   // TODO: implement didUpdateWidget
+//   super.didUpdateWidget(oldWidget);
+//   if(widget.sourceList != oldWidget.sourceList){
+//     ChangeSourceSelectedState(selectedIndex: );
+//   }
+// }
+
+// void changeIndex(int newIndex){
+//   selectedIndex=newIndex;
+//   notifyListeners();
+// }
 }

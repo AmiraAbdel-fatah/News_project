@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:news/provider/app_theme_provider.dart';
 import 'package:news/ui/home/home_screen.dart';
 import 'package:news/utils/assets_manager.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String routeName = 'Splash Screen';
@@ -24,6 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<AppThemeProvider>(context);
+    final bool isDarkMode = themeProvider.isDarkMode();
+
+    final String splashImage = isDarkMode
+        ? AssetsManager.splashDarkImage
+        : AssetsManager.splashLightImage;
+    final String brandingImage = isDarkMode
+        ? AssetsManager.brandingDarkImage
+        : AssetsManager.brandingLightImage;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,9 +43,9 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Spacer(),
-            Image.asset(AssetsManager.splashIcon,),
+            Image.asset(splashImage),
             Spacer(),
-            Image.asset(AssetsManager.brandingIcon),
+            Image.asset(brandingImage)
           ],
         ),
       ),

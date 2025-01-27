@@ -7,6 +7,7 @@ class SourceDetailsViewModel extends ChangeNotifier {
   // todo: hold data - handel logic
   List<Source>? sourcesList;
   String? errorMessage;
+  int selectedIndex = 0;
 
   void getSources(String categoryId) async {
     // todo: reinitialize
@@ -27,6 +28,11 @@ class SourceDetailsViewModel extends ChangeNotifier {
       errorMessage = 'Error load source list.';
       //  errorMessage = 'No Internet Connection.';
     }
+    notifyListeners();
+  }
+
+  void changeSelectedSource(int newIndex) {
+    selectedIndex = newIndex;
     notifyListeners();
   }
 }

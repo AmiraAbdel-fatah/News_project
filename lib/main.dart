@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:news/provider/app_language_provider.dart';
 import 'package:news/provider/app_theme_provider.dart';
 import 'package:news/splash_screen.dart';
 import 'package:news/ui/home/home_screen.dart';
+import 'package:news/ui/home/view_full_article/view_full_article.dart';
 import 'package:news/utils/app_theme.dart';
+import 'package:news/utils/my_bloc_observer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
     ChangeNotifierProvider(create: (context) => AppThemeProvider()),
@@ -30,10 +34,11 @@ class MyApp extends StatelessWidget {
       locale: Locale(languageProvider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: HomeScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
+        ViewFullArticle.routeName: (context) => ViewFullArticle()
       },
     );
   }
